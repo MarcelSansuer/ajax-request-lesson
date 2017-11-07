@@ -1,5 +1,9 @@
-  document.getElementById('btn').addEventListener('click',loadText);
+  //listeners
+  document.getElementById('btnUser').addEventListener('click',callUser);
+  document.getElementById('btnUsers').addEventListener('click',callUsers);
 
+
+  //helper functions
   function log(msg) {
       console.log('READYSTATE',msg);
   }
@@ -8,31 +12,26 @@
       document.getElementById(id).innerHTML = msg;
   }
 
-  function loadText() {
+  function callUser() {
       //create XHR Object
       var xhr = new XMLHttpRequest(); 
 
       //OPEN - type, url/file, async
-      xhr.open('GET', 'assets/sample.txt', true);
+      xhr.open('GET', 'assets/user.json', true);
       
-      //OPTIONAL . used for loaders
-      xhr.onprogress = function () {
-          log(this.readyState);
-      }
-
       xhr.onload = function () {
         log(this.readyState);
         if(this.status == 200){
-            //console.log(this.responseText);
-            innerHTMLbyID('msg', this.responseText);
-        }
-      }
+            var user = JSON.parse(this.responseText);
 
-      xhr.onreadystatechange = function () {
-        log(this.readyState);
-        if(this.readyState == 4 && this.status == 200){
-            //console.log(this.responseText);
-          }
+            var htmlString = '<ul>'+
+            '<li>ID:'+ user.id +
+            '<li>Name:'+ user.name +
+            '<li>Email:'+ user.email +
+            '</ul>';
+
+            innerHTMLbyID('user', htmlString);
+        }
       }
 
       xhr.onerror = function () {
@@ -41,6 +40,38 @@
       //sends request
       xhr.send();
   }
+
+  function callUsers() {
+    //create XHR Object
+    var xhr = new XMLHttpRequest(); 
+
+    //OPEN - type, url/file, async
+    xhr.open('GET', 'assets/users.json', true);
+    
+    xhr.onload = function () {
+      log(this.readyState);
+      if(this.status == 200){
+          var users = JSON.parse(this.responseText);
+
+          var htmlString = '';
+          for(var i in users){
+            htmlString += '<ul>'+
+            '<li>ID:'+ users[i].id +
+            '<li>Name:'+ users[i].name +
+            '<li>Email:'+ users[i].email +
+            '</ul>';
+          }
+
+          innerHTMLbyID('users', htmlString);
+      }
+    }
+
+    xhr.onerror = function () {
+        console.log('Request Error ...');
+    }
+    //sends request
+    xhr.send();
+}
 
   
   /*ONLOAD -> HTTP statuses - 200: OK; 403: forbidden; 404 not found */
