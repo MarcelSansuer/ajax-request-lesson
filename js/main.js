@@ -1,7 +1,5 @@
   //listeners
-  document.getElementById('btnUser').addEventListener('click',callUser);
-  document.getElementById('btnUsers').addEventListener('click',callUsers);
-
+  document.getElementById('btn').addEventListener('click',callUsers);
 
   //helper functions
   function log(msg) {
@@ -12,54 +10,26 @@
       document.getElementById(id).innerHTML = msg;
   }
 
-  function callUser() {
-      //create XHR Object
-      var xhr = new XMLHttpRequest(); 
-
-      //OPEN - type, url/file, async
-      xhr.open('GET', 'assets/user.json', true);
-      
-      xhr.onload = function () {
-        log(this.readyState);
-        if(this.status == 200){
-            var user = JSON.parse(this.responseText);
-
-            var htmlString = '<ul>'+
-            '<li>ID:'+ user.id +
-            '<li>Name:'+ user.name +
-            '<li>Email:'+ user.email +
-            '</ul>';
-
-            innerHTMLbyID('user', htmlString);
-        }
-      }
-
-      xhr.onerror = function () {
-          console.log('Request Error ...');
-      }
-      //sends request
-      xhr.send();
-  }
-
   function callUsers() {
     //create XHR Object
     var xhr = new XMLHttpRequest(); 
 
     //OPEN - type, url/file, async
-    xhr.open('GET', 'assets/users.json', true);
+    xhr.open('GET', 'https://api.github.com/users?', true);
     
     xhr.onload = function () {
-      log(this.readyState);
       if(this.status == 200){
           var users = JSON.parse(this.responseText);
 
           var htmlString = '';
           for(var i in users){
-            htmlString += '<ul>'+
-            '<li>ID:'+ users[i].id +
-            '<li>Name:'+ users[i].name +
-            '<li>Email:'+ users[i].email +
-            '</ul>';
+            htmlString += '<div class="user">'+
+            '<img src="'+users[i].avatar_url+'" width="70" height="70">' +
+            '<ul>'+
+            '<li>ID: '+users[i].id+'</li>'+
+            '<li>ID: '+users[i].login+'</li>'+
+            '</ul>'+
+            '</div>';
           }
 
           innerHTMLbyID('users', htmlString);
