@@ -1,5 +1,3 @@
-
-
 <?php
 //Connect to a database
 $conn = mysqli_connect('127.0.0.1', 'root', '', 'ajax_example','3306');

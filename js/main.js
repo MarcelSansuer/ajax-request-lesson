@@ -1,35 +1,27 @@
 //listeners
-document.getElementById('getForm').addEventListener('submit',getName);
-document.getElementById('postForm').addEventListener('submit',postName);
+document.getElementById('btn').addEventListener('click',getUsers);
 
-function postName(e) {
-    e.preventDefault();
-
+function getUsers() {
     var xhr = new XMLHttpRequest();
 
-    var name = document.getElementById('name_Post').value;
-    var params = "name="+ name;
-
-    xhr.open('POST', 'process.php', true); 
+    xhr.open('GET', 'users.php', true); 
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     
     xhr.onload = function (){
-        document.getElementById('user').innerHTML = xhr.responseText;
-    }
-
-    xhr.send(params);
-}
-
-function getName(e) {
-    e.preventDefault();
-    var xhr = new XMLHttpRequest();
-
-    var name = document.getElementById('name_GET').value;
-
-    xhr.open('GET', 'process.php?name='+name, true); 
-    
-    xhr.onload = function (){
-        document.getElementById('user').innerHTML = xhr.responseText;
+        if(this.status == 200){
+            var users = JSON.parse(this.responseText);
+  
+            var htmlString = '';
+            for(var i in users){
+            htmlString += 
+            '<ul>'+
+                '<li>ID:'+ users[i].id +
+                '<li>Name:'+ users[i].name +
+            '</ul>';
+            }
+ 
+            document.getElementById('users').innerHTML = htmlString;
+        }
     }
 
     xhr.send();
