@@ -4,13 +4,18 @@
       console.log('READYSTATE',msg);
   }
 
+  function innerHTMLbyID(id, msg) {
+      document.getElementById(id).innerHTML = msg;
+  }
+
   function loadText() {
       //create XHR Object
       var xhr = new XMLHttpRequest(); 
-      //console.log(xhr);
+
       //OPEN - type, url/file, async
       xhr.open('GET', 'assets/sample.txt', true);
       
+      //OPTIONAL . used for loaders
       xhr.onprogress = function () {
           log(this.readyState);
       }
@@ -19,6 +24,7 @@
         log(this.readyState);
         if(this.status == 200){
             //console.log(this.responseText);
+            innerHTMLbyID('msg', this.responseText);
         }
       }
 
@@ -27,6 +33,10 @@
         if(this.readyState == 4 && this.status == 200){
             //console.log(this.responseText);
           }
+      }
+
+      xhr.onerror = function () {
+          console.log('Request Error ...');
       }
       //sends request
       xhr.send();
