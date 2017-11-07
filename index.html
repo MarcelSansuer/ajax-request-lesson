@@ -4,25 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Ajax - externel API</title>
-  <style>
-    .user{
-      display: flex;
-      background: lightblue;
-      padding: 10px;
-      margin-bottom: 10px;
-    }
-    .user ul{
-      list-style: none;
-    }
-  </style>
+  <title>Ajax 4 - php forms</title>
 </head>
 <body>
-    <button id="btn"> - load githup Users - </button>
+    <button id="btn"> - get name - </button>
+    <hr>
+    <h1>GET FORM</h1>
+    <form method="GET" action="process.php">
+      <input type="text" name="name">
+      <input type="submit" value="submit">
+    </form>
 
-    <h1>GitHup Users</h1>
-    <div id="users">
-    </div>
 <script src="js/main.js"></script>
 </body>
 </html>
