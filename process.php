@@ -2,6 +2,7 @@
 
 <?php
 //Connect to a database
+//TODO: create database
 
 
 echo 'Processing ...';
